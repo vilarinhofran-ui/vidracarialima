@@ -20,6 +20,8 @@ const defaultMediaItems = [
     title: "Projeto realizado",
     description: "Acabamento profissional em vidro sob medida.",
     url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.25.jpeg",
+    imagePosition: "center 34%",
+    removeBlueAccent: true,
   },
   {
     id: "default-3",
@@ -313,6 +315,9 @@ const createMediaElement = (item) => {
   img.src = item.url;
   img.loading = "lazy";
   img.alt = item.title || "Imagem de projeto";
+  if (item.imagePosition) {
+    img.style.objectPosition = item.imagePosition;
+  }
   return img;
 };
 
@@ -341,6 +346,9 @@ const renderMediaGrid = (container) => {
   sectionItems.forEach((item) => {
     const article = document.createElement("article");
     article.className = `project-card media-card media-type-${item.type} reveal is-visible`;
+    if (item.removeBlueAccent) {
+      article.classList.add("media-card-no-blue-point");
+    }
 
     const frame = document.createElement("div");
     frame.className = "media-frame";
@@ -355,6 +363,9 @@ const renderMediaGrid = (container) => {
       frontImage.src = item.url;
       frontImage.loading = "lazy";
       frontImage.alt = item.title || "Imagem de projeto";
+      if (item.imagePosition) {
+        frontImage.style.objectPosition = item.imagePosition;
+      }
       frontFace.appendChild(frontImage);
 
       const backFace = document.createElement("div");

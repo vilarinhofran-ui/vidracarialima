@@ -1552,6 +1552,19 @@ body[data-theme="light"] .google-review-box {
   animation: glassShine 5.8s ease-in-out infinite;
 }
 
+.media-card.media-card-no-blue-point::before {
+  display: none;
+}
+
+.accordion-gallery
+  .media-card.media-card-no-blue-point.media-type-image
+  .media-frame::before,
+.accordion-gallery
+  .media-card.media-card-no-blue-point.media-type-image
+  .media-frame::after {
+  display: none;
+}
+
 .loop-item img,
 .loop-item video,
 .loop-item iframe {
