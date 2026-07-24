@@ -22,6 +22,24 @@
 
       gtag("config", "AW-18044176642");
     </script>
+    <!-- Event snippet for Compra conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+    <script>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof url != "undefined") {
+            window.location = url;
+          }
+        };
+        gtag("event", "conversion", {
+          send_to: "AW-18044176642/UT1YCOvsppocEIKSkZxD",
+          transaction_id: "",
+          event_callback: callback,
+          // 'new_customer': true /* calculate dynamically, populate with true/false */,
+        });
+        return false;
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -1513,6 +1531,9 @@
               href="https://wa.me/5541992525057"
               target="_blank"
               rel="noopener noreferrer"
+              onclick="
+                return gtag_report_conversion('https://wa.me/5541992525057');
+              "
               >Chamar no WhatsApp</a
             >
           </div>
@@ -1535,6 +1556,11 @@
                   href="https://wa.me/5541992525057"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onclick="
+                    return gtag_report_conversion(
+                      'https://wa.me/5541992525057',
+                    );
+                  "
                   >(41) 99252-5057</a
                 >
               </div>
@@ -1864,6 +1890,7 @@
       href="https://wa.me/5541992525057"
       target="_blank"
       rel="noopener noreferrer"
+      onclick="return gtag_report_conversion('https://wa.me/5541992525057');"
       aria-label="Ver redes sociais no WhatsApp"
       title="Ver redes sociais no WhatsApp"
     >
