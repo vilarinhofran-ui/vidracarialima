@@ -147,6 +147,27 @@ const credentials = {
   password: "vidrosadmin@1997.",
 };
 
+const handleWhatsAppClick = (event) => {
+  if (event) {
+    event.preventDefault();
+  }
+
+  const fallbackUrl = "https://wa.me/5541992525057";
+  const anchor =
+    event && event.currentTarget instanceof HTMLAnchorElement
+      ? event.currentTarget
+      : null;
+  const targetUrl = anchor?.href || fallbackUrl;
+
+  if (typeof window.gtag === "function") {
+    gtag("event", "conversion", {
+      send_to: "AW-18044176642/UT1YCOvsppocEIKSkZxD",
+    });
+  }
+
+  window.open(targetUrl, "_blank", "noopener,noreferrer");
+};
+
 const menuToggle = document.querySelector(".menu-toggle");
 const themeToggle = document.querySelector(".theme-toggle");
 const navigation = document.querySelector(".nav-links");
@@ -913,6 +934,26 @@ const initBaseUI = () => {
       }
     });
   }
+
+  document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
+    if (link.dataset.whatsappTracked === "1") {
+      return;
+    }
+
+    link.dataset.whatsappTracked = "1";
+    link.addEventListener("click", handleWhatsAppClick);
+  });
+
+  document
+    .querySelectorAll('button[data-whatsapp-cta="hero-budget"]')
+    .forEach((button) => {
+      if (button.dataset.whatsappTracked === "1") {
+        return;
+      }
+
+      button.dataset.whatsappTracked = "1";
+      button.addEventListener("click", handleWhatsAppClick);
+    });
 
   observeReveals();
   initActiveSectionObserver();

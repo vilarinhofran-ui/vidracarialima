@@ -196,7 +196,13 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </p>
 
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#contato">Solicitar orçamento</a>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-whatsapp-cta="hero-budget"
+              >
+                Solicitar orçamento
+              </button>
               <a class="btn btn-secondary" href="#servicos">Ver serviços</a>
             </div>
 
@@ -1537,9 +1543,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               href="https://wa.me/5541992525057"
               target="_blank"
               rel="noopener noreferrer"
-              onclick="
-                return gtag_report_conversion('https://wa.me/5541992525057');
-              "
               >Chamar no WhatsApp</a
             >
           </div>
@@ -1562,11 +1565,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   href="https://wa.me/5541992525057"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onclick="
-                    return gtag_report_conversion(
-                      'https://wa.me/5541992525057',
-                    );
-                  "
                   >(41) 99252-5057</a
                 >
               </div>
@@ -1896,7 +1894,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       href="https://wa.me/5541992525057"
       target="_blank"
       rel="noopener noreferrer"
-      onclick="return gtag_report_conversion('https://wa.me/5541992525057');"
       aria-label="Ver redes sociais no WhatsApp"
       title="Ver redes sociais no WhatsApp"
     >
