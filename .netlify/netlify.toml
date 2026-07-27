@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "C:\\Users\\Francielly Vilarinho\\OneDrive\\Área de Trabalho\\SITES VS CODE\\VIDRAÇARIA LIMA"
+publish = "C:\\Users\\Francielly Vilarinho\\OneDrive\\Área de Trabalho\\SITES VS CODE\\VIDRAÇARIA CLASS A"
 publishOrigin = "default"
 
 [build.environment]

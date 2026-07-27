@@ -2,7 +2,7 @@ const themeStorageKey = "vidracaria-theme";
 const mediaStorageKey = "vidracaria-media-items";
 const devAuthStorageKey = "vidracaria-dev-auth";
 const promoAudioSource = "assets/trilha.mp3";
-const flipLogoSource = "assets/LOGO%20LIMA.jpg";
+const flipLogoSource = "assets/logo%20classe%20a.png";
 
 const defaultMediaItems = [
   {
@@ -11,7 +11,7 @@ const defaultMediaItems = [
     type: "image",
     title: "Projeto realizado",
     description: "Registro real de instalação e acabamento.",
-    url: "assets/LOGO%20LIMA.jpg",
+    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.25.jpeg",
   },
   {
     id: "default-2",
@@ -19,7 +19,7 @@ const defaultMediaItems = [
     type: "image",
     title: "Projeto realizado",
     description: "Acabamento profissional em vidro sob medida.",
-    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.25.jpeg",
+    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.25%20%281%29.jpeg",
     imagePosition: "center 34%",
     removeBlueAccent: true,
   },
@@ -29,7 +29,7 @@ const defaultMediaItems = [
     type: "image",
     title: "Projeto realizado",
     description: "Detalhes de execução e alinhamento técnico.",
-    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.25%20%281%29.jpeg",
+    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.28.jpeg",
   },
   {
     id: "default-4",
@@ -37,7 +37,7 @@ const defaultMediaItems = [
     type: "image",
     title: "Projeto realizado",
     description: "Solução em vidro aplicada no ambiente.",
-    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.28.jpeg",
+    url: "assets/WhatsApp%20Image%202026-07-23%20at%2011.13.29.jpeg",
   },
   {
     id: "default-5",
@@ -143,8 +143,29 @@ const defaultMediaItems = [
 ];
 
 const credentials = {
-  username: "vidrosadmin@1997.",
-  password: "vidrosadmin@1997.",
+  username: "classea.admin@1997",
+  password: "classea.admin@1997",
+};
+
+const catalogCardLabels = {
+  divisorias: "Divisórias",
+  coberturas: "Coberturas",
+  "guarda-corpo": "Guarda-corpo",
+  telas: "Telas",
+  muros: "Muros",
+  espelhos: "Espelhos",
+  "box-de-vidro": "Box de vidro",
+  portas: "Portas",
+  janelas: "Janelas",
+  diversos: "Diversos",
+};
+
+const sectionLabels = {
+  projetos: "Projetos",
+  trabalhos: "Trabalhos",
+  videos: "Vídeos",
+  avaliacoes: "Avaliações",
+  catalogo: "Catálogo",
 };
 
 const handleWhatsAppClick = (event) => {
@@ -152,7 +173,8 @@ const handleWhatsAppClick = (event) => {
     event.preventDefault();
   }
 
-  const fallbackUrl = "https://wa.me/5541992525057";
+  const fallbackUrl =
+    "https://api.whatsapp.com/send/?phone=41991371768&text&type=phone_number&app_absent=0&utm_source=ig";
   const anchor =
     event && event.currentTarget instanceof HTMLAnchorElement
       ? event.currentTarget
@@ -174,11 +196,7 @@ const navigation = document.querySelector(".nav-links");
 const yearElement = document.querySelector("#year");
 const navLinks = document.querySelectorAll(".nav-links a");
 
-const preferredTheme =
-  localStorage.getItem(themeStorageKey) ||
-  (window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark");
+const preferredTheme = localStorage.getItem(themeStorageKey) || "dark";
 
 const setMenuState = (isOpen) => {
   if (!navigation || !menuToggle) {
@@ -284,7 +302,8 @@ const uniqueMediaItems = (items) => {
     const urlPart = (item.url || "").trim().toLowerCase();
     const titlePart = (item.title || "").trim().toLowerCase();
     const descriptionPart = (item.description || "").trim().toLowerCase();
-    const key = `${item.section}|${item.type}|${urlPart}|${titlePart}|${descriptionPart}`;
+    const catalogPart = (item.catalogCard || "").trim().toLowerCase();
+    const key = `${item.section}|${catalogPart}|${item.type}|${urlPart}|${titlePart}|${descriptionPart}`;
     if (seen.has(key)) {
       return false;
     }
@@ -301,6 +320,14 @@ const toInstagramEmbedUrl = (url) => {
   const kind = match[1].toLowerCase();
   const code = match[2];
   return `https://www.instagram.com/${kind}/${code}/embed`;
+};
+
+const isBrandLogoImage = (url) => {
+  const normalized = (url || "").toLowerCase();
+  return (
+    normalized.includes("logo%20classe%20a") ||
+    normalized.includes("logo classe a")
+  );
 };
 
 const createMediaElement = (item) => {
@@ -336,6 +363,9 @@ const createMediaElement = (item) => {
   img.src = item.url;
   img.loading = "lazy";
   img.alt = item.title || "Imagem de projeto";
+  if (isBrandLogoImage(item.url)) {
+    img.classList.add("media-image-contain");
+  }
   if (item.imagePosition) {
     img.style.objectPosition = item.imagePosition;
   }
@@ -384,6 +414,9 @@ const renderMediaGrid = (container) => {
       frontImage.src = item.url;
       frontImage.loading = "lazy";
       frontImage.alt = item.title || "Imagem de projeto";
+      if (isBrandLogoImage(item.url)) {
+        frontImage.classList.add("media-image-contain");
+      }
       if (item.imagePosition) {
         frontImage.style.objectPosition = item.imagePosition;
       }
@@ -395,11 +428,11 @@ const renderMediaGrid = (container) => {
       const frontLogo = document.createElement("img");
       frontLogo.className = "media-flip-logo";
       frontLogo.src = flipLogoSource;
-      frontLogo.alt = "Logo Vidracaria Lima";
+      frontLogo.alt = "Logo Vidracaria Classe A";
 
       const frontLabel = document.createElement("span");
       frontLabel.className = "media-flip-label";
-      frontLabel.textContent = "Vidracaria Lima";
+      frontLabel.textContent = "Vidracaria Classe A";
 
       backFace.append(frontLogo, frontLabel);
 
@@ -426,10 +459,94 @@ const renderMediaGrid = (container) => {
   });
 };
 
+const renderCatalogMediaCards = () => {
+  const catalogCards = document.querySelectorAll(
+    ".catalog-card[data-catalog-key]",
+  );
+  if (!catalogCards.length) {
+    return;
+  }
+
+  const catalogItems = uniqueMediaItems(
+    readMediaItems().filter(
+      (item) =>
+        item.section === "catalogo" &&
+        ["image", "video", "embed"].includes(item.type),
+    ),
+  );
+
+  catalogCards.forEach((card) => {
+    const cardKey = card.dataset.catalogKey;
+    const mediaSlot = card.querySelector("[data-catalog-media]");
+    if (!cardKey || !mediaSlot) {
+      return;
+    }
+
+    const cardMedia = catalogItems.find((item) => item.catalogCard === cardKey);
+
+    mediaSlot.innerHTML = "";
+    mediaSlot.hidden = !cardMedia;
+    card.classList.toggle("catalog-card-has-media", Boolean(cardMedia));
+
+    if (!cardMedia) {
+      return;
+    }
+
+    const frame = document.createElement("div");
+    frame.className = "media-frame catalog-media-frame";
+    frame.appendChild(createMediaElement(cardMedia));
+    mediaSlot.appendChild(frame);
+  });
+};
+
+const refreshDevMediaList = () => {
+  const mediaList = document.querySelector("#dev-media-list");
+  if (!mediaList) {
+    return;
+  }
+
+  const customItems = readMediaItems().filter(
+    (item) => !item.id.startsWith("default-"),
+  );
+
+  mediaList.innerHTML = "";
+
+  if (!customItems.length) {
+    const empty = document.createElement("p");
+    empty.textContent = "Nenhuma mídia personalizada publicada ainda.";
+    mediaList.appendChild(empty);
+    return;
+  }
+
+  customItems.forEach((item) => {
+    const wrapper = document.createElement("article");
+    wrapper.className = "dev-media-item";
+
+    const sectionLabel = sectionLabels[item.section] || item.section;
+    const catalogSuffix =
+      item.section === "catalogo" && item.catalogCard
+        ? ` • ${catalogCardLabels[item.catalogCard] || item.catalogCard}`
+        : "";
+
+    const summary = document.createElement("p");
+    summary.textContent = `${sectionLabel}${catalogSuffix} • ${item.type.toUpperCase()} • ${item.title || "Sem título"}`;
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "btn btn-secondary dev-remove";
+    removeButton.textContent = "Remover";
+    removeButton.setAttribute("data-remove-id", item.id);
+
+    wrapper.append(summary, removeButton);
+    mediaList.appendChild(wrapper);
+  });
+};
+
 const renderAllMedia = () => {
   document.querySelectorAll(".js-media-gallery").forEach((grid) => {
     renderMediaGrid(grid);
   });
+  renderCatalogMediaCards();
   renderTestimonials();
   initSharedPromoAudio();
 };
@@ -542,12 +659,35 @@ const renderTestimonials = () => {
     return;
   }
 
-  const createStarsRating = () => {
+  const createStarsRating = (ratingValue = 5) => {
+    const safeRating = Math.max(1, Math.min(5, Number(ratingValue) || 5));
     const rating = document.createElement("div");
     rating.className = "testimonial-rating testimonial-rating-stars";
-    rating.setAttribute("aria-label", "Avaliacao 5 estrelas");
-    rating.innerHTML = `${'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7 14.9 8.6 21.4 9.5 16.7 14.1 17.8 20.6 12 17.6 6.2 20.6 7.3 14.1 2.6 9.5 9.1 8.6 12 2.7Z"/></svg>'.repeat(5)}<span class="sr-only">5 estrelas</span>`;
+    rating.setAttribute("aria-label", `Avaliacao ${safeRating} estrelas`);
+    rating.innerHTML = `${'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.7 14.9 8.6 21.4 9.5 16.7 14.1 17.8 20.6 12 17.6 6.2 20.6 7.3 14.1 2.6 9.5 9.1 8.6 12 2.7Z"/></svg>'.repeat(safeRating)}<span class="sr-only">${safeRating} estrelas</span>`;
     return rating;
+  };
+
+  const toDisplayDate = (dateValue) => {
+    const parsedDate = new Date(dateValue || "");
+    if (Number.isNaN(parsedDate.getTime())) {
+      return "Publicado recentemente";
+    }
+    return `Publicado em ${parsedDate.toLocaleDateString("pt-BR")}`;
+  };
+
+  const getInitials = (text) => {
+    const parts = String(text || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+    if (!parts.length) {
+      return "CL";
+    }
+    return parts
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() || "")
+      .join("");
   };
 
   const items = uniqueMediaItems(
@@ -599,16 +739,55 @@ const renderTestimonials = () => {
 
   reviewItems.forEach((item) => {
     const article = document.createElement("article");
-    article.className = "service-card testimonial-card reveal is-visible";
+    article.className =
+      "service-card testimonial-card testimonial-review-card reveal is-visible";
+
+    const reviewerName =
+      String(item.reviewer || "").trim() || String(item.title || "Cliente");
+    const reviewerLocation = String(item.reviewCity || "").trim();
+    const reviewerRating = Math.max(1, Math.min(5, Number(item.rating) || 5));
+
+    const topRow = document.createElement("div");
+    topRow.className = "testimonial-review-top";
+
+    const identity = document.createElement("div");
+    identity.className = "testimonial-review-identity";
+
+    const avatar = document.createElement("span");
+    avatar.className = "testimonial-review-avatar";
+    avatar.textContent = getInitials(reviewerName);
+
+    const identityText = document.createElement("div");
+    identityText.className = "testimonial-review-identity-text";
+
+    const name = document.createElement("strong");
+    name.textContent = reviewerName;
+
+    const location = document.createElement("span");
+    location.textContent = reviewerLocation || "Cliente verificado";
+
+    identityText.append(name, location);
+    identity.append(avatar, identityText);
+
+    const publishedAt = document.createElement("small");
+    publishedAt.className = "testimonial-review-date";
+    publishedAt.textContent = toDisplayDate(item.createdAt);
+
+    topRow.append(identity, publishedAt);
 
     const title = document.createElement("h3");
-    title.textContent = item.title || "Cliente";
+    title.textContent = item.title || "Avaliação de cliente";
 
     const description = document.createElement("p");
     description.textContent =
       item.description || "Excelente atendimento e acabamento impecável.";
 
-    article.append(createStarsRating(), title, description);
+    article.append(
+      topRow,
+      createStarsRating(reviewerRating),
+      title,
+      description,
+    );
     container.appendChild(article);
   });
 };
@@ -623,9 +802,18 @@ const initDevPanel = () => {
   const devSection = document.querySelector("#painel-dev");
   const mainElement = document.querySelector("main");
   const typeSelect = publishForm.querySelector('select[name="type"]');
+  const sectionSelect = publishForm.querySelector('select[name="section"]');
   const urlInput = publishForm.querySelector('input[name="url"]');
   const descriptionInput = publishForm.querySelector(
     'input[name="description"]',
+  );
+  const reviewOnlyFields = publishForm.querySelector("#review-only-fields");
+  const reviewerInput = publishForm.querySelector('input[name="reviewer"]');
+  const ratingInput = publishForm.querySelector('select[name="rating"]');
+  const reviewCityInput = publishForm.querySelector('input[name="reviewCity"]');
+  const catalogOnlyFields = publishForm.querySelector("#catalog-only-fields");
+  const catalogCardInput = publishForm.querySelector(
+    'select[name="catalogCard"]',
   );
   const publicSections = mainElement
     ? Array.from(mainElement.querySelectorAll("section")).filter(
@@ -645,11 +833,17 @@ const initDevPanel = () => {
 
   const setDevSessionUI = () => {
     const isAuthenticated = localStorage.getItem(devAuthStorageKey) === "1";
-    const openFromHash = window.location.hash === "#painel-dev";
-    const showDevSection = isAuthenticated || openFromHash;
+    const adminGateRequested =
+      new URLSearchParams(window.location.search).get("admin") === "1";
+    const showDevSection = isAuthenticated || adminGateRequested;
+
+    if (!showDevSection && window.location.hash === "#painel-dev") {
+      window.location.hash = "#home";
+    }
 
     if (devSection) {
       devSection.hidden = !showDevSection;
+      devSection.classList.toggle("is-authenticated", isAuthenticated);
     }
 
     if (isAuthenticated) {
@@ -676,12 +870,43 @@ const initDevPanel = () => {
       return;
     }
 
+    const isCatalogSection = sectionSelect?.value === "catalogo";
+
+    if (isCatalogSection && typeSelect.value === "review") {
+      typeSelect.value = "image";
+    }
+
     const isReview = typeSelect.value === "review";
+    if (reviewOnlyFields) {
+      reviewOnlyFields.hidden = !isReview;
+    }
+
+    if (catalogOnlyFields) {
+      catalogOnlyFields.hidden = !isCatalogSection;
+    }
+
+    if (catalogCardInput) {
+      catalogCardInput.required = Boolean(isCatalogSection);
+    }
+
     urlInput.required = !isReview;
     urlInput.disabled = isReview;
     urlInput.placeholder = isReview
       ? "Não é necessário para avaliação escrita"
       : "https://...";
+
+    if (reviewerInput) {
+      reviewerInput.required = isReview;
+    }
+
+    if (ratingInput) {
+      ratingInput.required = isReview;
+    }
+
+    if (reviewCityInput) {
+      reviewCityInput.required = false;
+    }
+
     descriptionInput.placeholder = isReview
       ? "Escreva a avaliação do cliente"
       : "Ex: Projeto concluído em Curitiba";
@@ -689,8 +914,13 @@ const initDevPanel = () => {
 
   if (typeSelect) {
     typeSelect.addEventListener("change", syncPublishFields);
-    syncPublishFields();
   }
+
+  if (sectionSelect) {
+    sectionSelect.addEventListener("change", syncPublishFields);
+  }
+
+  syncPublishFields();
 
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -714,6 +944,15 @@ const initDevPanel = () => {
 
   publishForm.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    const isAuthenticated = localStorage.getItem(devAuthStorageKey) === "1";
+    if (!isAuthenticated) {
+      publishMessage.textContent =
+        "Faça login com usuário e senha para publicar mídia.";
+      setDevSessionUI();
+      return;
+    }
+
     const formData = new FormData(publishForm);
 
     const item = {
@@ -723,7 +962,36 @@ const initDevPanel = () => {
       title: String(formData.get("title") || "Projeto"),
       description: String(formData.get("description") || ""),
       url: String(formData.get("url") || "").trim(),
+      reviewer: String(formData.get("reviewer") || "").trim(),
+      rating: Number(formData.get("rating") || 5),
+      reviewCity: String(formData.get("reviewCity") || "").trim(),
+      catalogCard: String(formData.get("catalogCard") || "").trim(),
+      createdAt: new Date().toISOString(),
     };
+
+    if (item.section === "catalogo") {
+      if (!item.catalogCard) {
+        publishMessage.textContent =
+          "Selecione o card do catálogo para vincular a mídia.";
+        return;
+      }
+
+      if (item.type === "review") {
+        publishMessage.textContent =
+          "No catálogo, publique apenas imagem, vídeo ou embed.";
+        return;
+      }
+    } else {
+      item.catalogCard = "";
+    }
+
+    if (item.type === "review") {
+      item.url = "";
+      item.rating = Math.max(1, Math.min(5, Number(item.rating) || 5));
+      if (!item.reviewer) {
+        item.reviewer = item.title || "Cliente";
+      }
+    }
 
     if (item.type !== "review") {
       try {
@@ -741,6 +1009,7 @@ const initDevPanel = () => {
     saveMediaItems(customItems);
     publishMessage.textContent = "Mídia publicada com sucesso.";
     publishForm.reset();
+    syncPublishFields();
     renderAllMedia();
     refreshDevMediaList();
   });
@@ -783,6 +1052,39 @@ const initDevPanel = () => {
   setDevSessionUI();
 };
 
+const initAdminLockForm = () => {
+  const form = document.querySelector("#admin-lock-form");
+  const message = document.querySelector("#admin-lock-message");
+
+  if (!(form instanceof HTMLFormElement) || !(message instanceof HTMLElement)) {
+    return;
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const username = String(formData.get("username") || "").trim();
+    const password = String(formData.get("password") || "").trim();
+
+    if (
+      username === credentials.username &&
+      password === credentials.password
+    ) {
+      localStorage.setItem(devAuthStorageKey, "1");
+      message.textContent = "Autenticação confirmada. Redirecionando...";
+
+      const redirectUrl = new URL(window.location.href);
+      redirectUrl.searchParams.set("admin", "1");
+      redirectUrl.hash = "#painel-dev";
+      window.location.href = redirectUrl.toString();
+      return;
+    }
+
+    message.textContent = "Login ou senha inválidos.";
+  });
+};
+
 const initLeadForms = () => {
   const handleLeadSubmit = (event) => {
     event.preventDefault();
@@ -797,7 +1099,7 @@ const initLeadForms = () => {
     const lines = [];
     lines.push("Solicitação de Orçamento");
     lines.push("");
-    lines.push("(Venho pelo site da Vidraçaria Lima)");
+    lines.push("(Venho pelo site da Vidraçaria Classe A)");
     lines.push("");
     lines.push(`Nome: ${nome}`);
     if (telefone) lines.push(`WhatsApp: ${telefone}`);
@@ -819,10 +1121,8 @@ const initLeadForms = () => {
 
     const text = lines.join("\n");
     const socialTargets = {
-      whatsapp: `https://wa.me/5541992525057?text=${encodeURIComponent(text)}`,
-      instagram:
-        "https://www.instagram.com/vidros_e_esquadriaslima?utm_source=qr",
-      facebook: "http://facebook.com/profile.php?id=61566779721921",
+      whatsapp: `https://api.whatsapp.com/send/?phone=41991371768&text=${encodeURIComponent(text)}&type=phone_number&app_absent=0&utm_source=ig`,
+      instagram: "https://www.instagram.com/vidrosclassea_sjp/",
     };
 
     const targetUrl = socialTargets[redeSocial] || socialTargets.whatsapp;
@@ -917,7 +1217,7 @@ const initBaseUI = () => {
   });
 
   const googleReviewInput = document.querySelector("#google-review-link");
-  if (googleReviewInput instanceof HTMLInputElement) {
+  if (googleReviewInput instanceof HTMLElement) {
     const openGoogleReview = () => {
       const targetUrl = googleReviewInput.dataset.reviewUrl;
       if (!targetUrl) {
@@ -935,14 +1235,16 @@ const initBaseUI = () => {
     });
   }
 
-  document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
-    if (link.dataset.whatsappTracked === "1") {
-      return;
-    }
+  document
+    .querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]')
+    .forEach((link) => {
+      if (link.dataset.whatsappTracked === "1") {
+        return;
+      }
 
-    link.dataset.whatsappTracked = "1";
-    link.addEventListener("click", handleWhatsAppClick);
-  });
+      link.dataset.whatsappTracked = "1";
+      link.addEventListener("click", handleWhatsAppClick);
+    });
 
   document
     .querySelectorAll('button[data-whatsapp-cta="hero-budget"]')
@@ -963,6 +1265,7 @@ initBaseUI();
 initLeadForms();
 renderAllMedia();
 initDevPanel();
+initAdminLockForm();
 
 window.addEventListener("storage", (event) => {
   if (event.key === mediaStorageKey) {

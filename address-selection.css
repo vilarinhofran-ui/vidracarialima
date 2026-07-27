@@ -1,13 +1,19 @@
 :root {
   color-scheme: light;
-  font-family: Arial, sans-serif;
+  font-family: "Manrope", sans-serif;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f5f7fb;
-  color: #1f2937;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(214, 158, 46, 0.2),
+      transparent 34%
+    ),
+    linear-gradient(180deg, #fbf8f1, #f6efe1);
+  color: #1f1a14;
 }
 
 gmpx-split-layout {
@@ -16,10 +22,16 @@ gmpx-split-layout {
 
 .panel {
   display: grid;
+  gap: 16px;
+  padding: 26px;
+  background: #fffdfa;
+  border-right: 1px solid rgba(133, 95, 31, 0.14);
+  box-shadow: 0 8px 30px rgba(58, 40, 14, 0.1);
+}
+
+.panel-header {
+  display: grid;
   gap: 12px;
-  padding: 24px;
-  background: #ffffff;
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
 }
 
 .panel-title-row {
@@ -28,36 +40,98 @@ gmpx-split-layout {
   gap: 10px;
 }
 
-.sb-title-icon {
-  width: 24px;
-  height: 24px;
+.sb-logo {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(133, 95, 31, 0.26);
 }
 
 .sb-title {
+  display: block;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
+.sb-subtitle {
+  display: block;
+  margin-top: 2px;
+  color: #7a6041;
+  font-size: 0.84rem;
+}
+
 .panel-note {
-  margin: 0 0 4px;
+  margin: 2px 0 0;
   font-size: 0.92rem;
   line-height: 1.5;
-  color: #475569;
+  color: #6b5b48;
+}
+
+.panel-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.panel-badges span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(133, 95, 31, 0.24);
+  background: rgba(214, 158, 46, 0.12);
+  color: #5d431f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.back-link {
+  width: fit-content;
+  color: #8a5a16;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: #6f450e;
+}
+
+.address-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 2px;
+  padding: 16px;
+  border: 1px solid rgba(133, 95, 31, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92),
+    rgba(250, 242, 231, 0.7)
+  );
+}
+
+.address-form label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #694b22;
 }
 
 input {
   width: 100%;
   min-height: 46px;
   padding: 0 14px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d6c5a8;
   border-radius: 12px;
   font: inherit;
   box-sizing: border-box;
+  background: #fff;
 }
 
 input:focus {
-  outline: 2px solid rgba(14, 165, 233, 0.2);
-  border-color: #0ea5e9;
+  outline: 2px solid rgba(214, 158, 46, 0.2);
+  border-color: #c1882f;
 }
 
 .half-input-container {
@@ -66,8 +140,24 @@ input:focus {
   gap: 12px;
 }
 
+.half-input-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+.panel-api-note {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(133, 95, 31, 0.2);
+  background: rgba(214, 158, 46, 0.1);
+  color: #6b5b48;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
 gmpx-icon-button {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 gmp-map {
@@ -78,6 +168,10 @@ gmp-map {
 @media (max-width: 640px) {
   .panel {
     padding: 18px;
+  }
+
+  .address-form {
+    padding: 14px;
   }
 
   .half-input-container {
